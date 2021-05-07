@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS zabytki (
   forma_ochrony TEXT NOT NULL,
   dokladnosc_polozenia TEXT NOT NULL,
   nazwa TEXT NOT NULL,
-  chronologia TEXT NOT NULL,
+  chronologia TEXT,
   funkcja TEXT NOT NULL,
   wykaz_dokumentow TEXT NOT NULL,
   data_wpisu TEXT NOT NULL,
@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS zabytki (
   powiat TEXT NOT NULL,
   gmina TEXT NOT NULL,
   miejscowosc TEXT NOT NULL,
-  ulica TEXT NOT NULL,
-  nr_adresowy TEXT NOT NULL
+  ulica TEXT,
+  nr_adresowy TEXT
 );

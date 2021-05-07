@@ -1,7 +1,7 @@
 import sqlite3
 import pytest
 
-from poznajmy_polskie_zabytki.db import get_db
+from poznajmy_polskie_zabytki.db import get_db, populate_db
 
 
 def test_get_close_db(app):
@@ -22,8 +22,7 @@ def test_get_close_db(app):
 
 def test_db_schema(app, zabytki_info_fixt):
     with app.app_context():
-        db = get_db()
-        c = db.cursor()
+        c = get_db().cursor()
         # table name check
         table_name = c.execute("select name from sqlite_master where type = 'table'").fetchone()[0]
 
@@ -36,3 +35,12 @@ def test_db_schema(app, zabytki_info_fixt):
         # name of teh particular columns check
         for column_info in zabytki_table_info:
             assert column_info[1] in zabytki_info_fixt
+
+
+def test_populatedb(app_without_db_content):
+    with app_without_db_content.app_context():
+        populate_db()
+        c = get_db().cursor()
+        # amount of records:
+        quantity = c.execute("SELECT count(1) from zabytki").fetchone()[0]
+        assert quantity == 78616

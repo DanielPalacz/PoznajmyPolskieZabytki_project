@@ -1,8 +1,11 @@
 import sqlite3
+import pandas as pd
 
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+
+sql_insert_into_zabytki = "INSERT INTO zabytki VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
 
 def get_db():
@@ -30,12 +33,24 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 
+def populate_db():
+    db = get_db()
+    df_data = pd.read_csv(current_app.config["INPUT"])
+    df_size = len(df_data.index)
+    c = db.cursor()
+    for number in range(df_size):
+        input_data = tuple(df_data.iloc[number])
+        input_row = (df_data.index[number], *input_data)
+        c.execute(sql_insert_into_zabytki, input_row)
+
+
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
     """Create new DB with zabytki table if not exists."""
     init_db()
-    click.echo('Initialized the database.')
+    populate_db()
+    click.echo('Initialized the database. Data were automatically loaded')
 
 
 def init_app(app):

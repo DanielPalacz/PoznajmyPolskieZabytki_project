@@ -37,6 +37,7 @@ def test_db_schema(app, zabytki_info_fixt):
             assert column_info[1] in zabytki_info_fixt
 
 
+@pytest.mark.skip
 def test_populatedb(app_without_db_content):
     with app_without_db_content.app_context():
         populate_db()
@@ -44,3 +45,16 @@ def test_populatedb(app_without_db_content):
         # amount of records:
         quantity = c.execute("SELECT count(1) from zabytki").fetchone()[0]
         assert quantity == 78616
+
+
+def test_init_db_command(runner, monkeypatch):
+    class Recorder:
+        called = False
+
+    def fake_init_db():
+        Recorder.called = True
+
+    monkeypatch.setattr("poznajmy_polskie_zabytki.db.init_db", fake_init_db)
+    result = runner.invoke(args=["init-db"])
+    assert "Initialized" in result.output
+    assert Recorder.called

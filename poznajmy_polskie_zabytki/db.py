@@ -5,7 +5,8 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
-sql_insert_into_zabytki = "INSERT INTO zabytki VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+sql_insert_into_zabytki = \
+    "INSERT INTO zabytki VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
 
 def get_db():
@@ -42,15 +43,21 @@ def populate_db():
         input_data = tuple(df_data.iloc[number])
         input_row = (df_data.index[number], *input_data)
         c.execute(sql_insert_into_zabytki, input_row)
+    db.commit()
 
 
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
     """Create new DB with zabytki table if not exists."""
-    init_db()
-    populate_db()
-    click.echo('Initialized the database. Data were automatically loaded')
+    try:
+        init_db()
+        populate_db()
+    except sqlite3.IntegrityError:
+        click.echo("Initialized the database. "
+                   "But due to 'IntegrityError' data population failed.")
+    else:
+        click.echo("Initialized the database. Data were automatically loaded")
 
 
 def init_app(app):

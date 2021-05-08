@@ -77,9 +77,9 @@ def client(app):
 
 
 @pytest.fixture
-def runner(app):
+def runner(app_without_db_content):
     """A test runner for the app's Click commands."""
-    return app.test_cli_runner()
+    return app_without_db_content.test_cli_runner()
 
 
 @pytest.fixture

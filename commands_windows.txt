@@ -1,0 +1,21 @@
+
+For Windows cmd, use set instead of export:
+-------------------------------------------
+> set FLASK_APP=poznajmy_polskie_zabytki
+> set FLASK_ENV=development
+> flask run
+(instance directory was created)
+-------------------------------------------
+
+copy DANE_ZESTWIENIE_ZRN.csv into instance directory
+
+-------------------------------------------
+
+
+PYTHONPATH=C:\Users\danie\OneDrive\Pulpit\PythonProjects\PoznajmyPolskieZabytki_project
+pytest -s -v
+
+-------------------------------------------
+
+
+

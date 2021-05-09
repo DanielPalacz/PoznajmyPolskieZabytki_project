@@ -8,6 +8,23 @@ from flask.cli import with_appcontext
 sql_insert_into_zabytki = \
     "INSERT INTO zabytki VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
+zabytki_info = (
+ "id",
+ "inspire_id",
+ "forma_ochrony",
+ "dokladnosc_polozenia",
+ "nazwa",
+ "chronologia",
+ "funkcja",
+ "wykaz_dokumentow",
+ "data_wpisu",
+ "wojewodztwo",
+ "powiat",
+ "gmina",
+ "miejscowosc",
+ "ulica",
+ "nr_adresowy")
+
 
 def get_db():
     if 'db' not in g:
@@ -57,7 +74,7 @@ def init_db_command():
         click.echo("Initialized the database. "
                    "But due to 'IntegrityError' data population failed.")
     else:
-        click.echo("Initialized the database. Data were automatically loaded")
+        click.echo("Initialized the database. Data were automatically loaded.")
 
 
 def init_app(app):

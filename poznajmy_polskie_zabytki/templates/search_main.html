@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<p>Super:) Poznajemy razem polskie zabytki.</p>
+{% endblock %}
+
+{% block content %}
+	<form action="/wyszukaj/" method="get">
+        <p>Wyszukiwarka zabytków (na podstawie nazwy miejcowości):  </p>
+        <input type="text" name="miasto" placeholder="..wpisz miejscowość.." autocomplete="off"/>
+        <br/>
+        <input type="submit" value="Szukaj"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<p>Fajnie, że jesteś:) To może poznajmy razem polskie zabytki?</p>
+{% endblock %}
+
+{% block content %}
+<br>
+<p>Dzięki tej stronie możesz:</p>
+<ul>
+  <li>
+  wyszukać zabytki w Twojej okolicy:
+  <br>
+  <a href="/wyszukaj">Wyszukaj zabytki</a>
+  <br>
+  </li>
+  <li>
+  wygenerować losową wycieczkę po okolicznych zabytkach:
+  <br>
+  <a href="/wygenerujesz">Wygeneruj wycieczkę</a>
+  </li>
+</ul>
+{% endblock %}

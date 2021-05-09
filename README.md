@@ -13,5 +13,6 @@
 * https://dane.gov.pl/pl/dataset/1130,rejestr-zabytkow-nieruchomych (CSV DB file)
 ```
 --- 
-### Technologies:
-* python, flask, sqlite3
+## Main technologies:
+* python, flask, sqlite3, pytest
+##### (Narrowly used python libs: pandas, BeautifulSoup)

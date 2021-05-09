@@ -1,0 +1,27 @@
+
+
+For Linux and Mac:
+-------------------------------------------------
+$ export FLASK_APP=poznajmy_polskie_zabytki
+$ export FLASK_ENV=development
+$ flask run
+instance directory was created)
+-------------------------------------------------
+
+copy DANE_ZESTWIENIE_ZRN.csv into instance directory
+
+------------------------------------------------
+
+repository directory:
+
+------------------------------------------------
+
+python3 -m venv localenv
+source localenv/bin/activate
+pip install -U -r requirements.txt
+
+------------------------------------------------
+
+PYTHONPATH=. pytest -v -s
+
+------------------------------------------------

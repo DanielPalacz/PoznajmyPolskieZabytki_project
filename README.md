@@ -15,8 +15,3 @@
 --- 
 ### Technologies:
 * python, flask, sqlite3
-
-```
-Hello  (<-- two spaces)
-World
-```

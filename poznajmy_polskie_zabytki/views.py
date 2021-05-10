@@ -20,7 +20,7 @@ from poznajmy_polskie_zabytki.db import get_db
 bp = Blueprint("views", __name__)
 
 
-def create_sql_query(*, city="", parish="", county="", keyword="") -> str:
+def _create_sql_query(*, city="", parish="", county="", keyword="") -> str:
     sql_query = "SELECT * from zabytki where"
     if city:
         sql_query += " miejscowosc='" + city + "'"
@@ -54,7 +54,7 @@ def wyszukaj():
     if city or parish or county or keyword:
         try:
             db = get_db()
-            sql_query = create_sql_query(city=city, parish=parish, county=county, keyword=keyword)
+            sql_query = _create_sql_query(city=city, parish=parish, county=county, keyword=keyword)
             output = db.execute(sql_query).fetchall()
         except sqlite3.Error:
             abort(500)

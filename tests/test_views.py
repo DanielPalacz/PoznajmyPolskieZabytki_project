@@ -1,8 +1,6 @@
 import pytest
 from bs4 import BeautifulSoup
 
-from poznajmy_polskie_zabytki.db import get_db
-
 
 def test_index(client):
     response = client.get("/")
@@ -17,3 +15,46 @@ def test_index_links(client):
     assert '<a href="/">Poznajmy polskie zabytki</a>' in links
     assert '<a href="/wyszukaj">Wyszukaj zabytki</a>' in links
     assert '<a href="/wygenerujesz">Wygeneruj wycieczkę</a>' in links
+
+
+def test_wyszukaj_main(client):
+    response = client.get("/wyszukaj/")
+    soup = BeautifulSoup(response.get_data(), "html.parser")
+    input_tags = soup.find_all("input")
+    assert len(input_tags) == 5
+    for input_tag in input_tags:
+        assert input_tag.get("name") in ["miasto", "gmina", "powiat", "dowolneslowo", None]
+    for p in soup.find_all("p"):
+        assert p.text in ["Super:) Poznajemy razem polskie zabytki.", "Wyszukiwarka zabytków:"]
+
+
+def test_wyszukaj_without_parameters(client):
+    response = client.get("/wyszukaj/?miasto=&gmina=&powiat=&dowolneslowo=")
+    soup = BeautifulSoup(response.get_data(), "html.parser")
+    input_tags = soup.find_all("input")
+    assert len(input_tags) == 5
+    for input_tag in input_tags:
+        assert input_tag.get("name") in ["miasto", "gmina", "powiat", "dowolneslowo", None]
+    for p in soup.find_all("p"):
+        assert p.text in ["Super:) Poznajemy razem polskie zabytki.", "Wyszukiwarka zabytków:"]
+
+
+def test_wyszukaj_sql_injection_filtering(client):
+    # Sql injection filtering not implemented yet - so test fails
+    response = client.get("/wyszukaj/?miasto=&gmina=&powiat=&dowolneslowo=+or+miasto='Koniusza'")
+    assert response.status_code == 200, "Sql injection filtering not implemented"
+
+
+def test_wyszukaj_dberror_when_sql_injection(client):
+    response = client.get("/wyszukaj/?miasto=&gmina=&powiat=&dowolneslowo=+or+miasto='Koniusza'")
+    assert response.status_code == 500
+
+
+@pytest.mark.skip
+def test_wyszukaj_with_parameters(client_full_dbload):
+    response = client_full_dbload.get("/wyszukaj/?miasto=Koniusza&gmina=&powiat=&dowolneslowo=dzwonnica")
+    soup = BeautifulSoup(response.get_data(), "html.parser")
+    monuments_text = soup.text
+    assert "Zabytki znalezione (2):" in monuments_text
+    assert """1\ndzwonnica\nXVIII w.\ndzwonnica\nmałopolskie\nproszowicki\nKoniusza\nKoniusza\n-""" in monuments_text
+    assert len(soup.find_all("tr")) == 3

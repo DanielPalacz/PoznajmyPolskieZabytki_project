@@ -7,6 +7,7 @@ import pytest
 from poznajmy_polskie_zabytki import create_app
 from poznajmy_polskie_zabytki.db import get_db
 from poznajmy_polskie_zabytki.db import init_db
+from poznajmy_polskie_zabytki.db import populate_db
 from poznajmy_polskie_zabytki.db import zabytki_info
 
 _data_sql = None
@@ -55,9 +56,35 @@ def app_without_db_content():
 
 
 @pytest.fixture
+def app_full_db():
+    """Create and configure a new app instance for each test."""
+    # create a temporary file to isolate the database for each test
+    db_fd, db_path = tempfile.mkstemp()
+    # create the app with common test config
+    app = create_app({"TESTING": True, "DATABASE": db_path})
+
+    # create the database and load test data
+    with app.app_context():
+        init_db()
+        populate_db()
+
+    yield app
+
+    # close and remove the temporary database
+    os.close(db_fd)
+    os.unlink(db_path)
+
+
+@pytest.fixture
 def client(app):
     """A test client for the app."""
     return app.test_client()
+
+
+@pytest.fixture
+def client_full_dbload(app_full_db):
+    """A test client for the app (full db loaded)."""
+    return app_full_db.test_client()
 
 
 @pytest.fixture

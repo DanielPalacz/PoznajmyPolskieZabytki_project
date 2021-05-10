@@ -1,5 +1,6 @@
 
 import functools
+import sqlite3
 
 from flask import Blueprint
 from flask import flash
@@ -7,6 +8,7 @@ from flask import g
 from flask import redirect
 from flask import render_template
 from flask import request
+from flask import abort
 from flask import session
 from flask import url_for
 from werkzeug.security import check_password_hash
@@ -27,17 +29,14 @@ def index():
 def wyszukaj():
     if tuple(request.args):
         city = request.args.get("miasto")
-        db = get_db()
-        c = db.cursor()
-        sql_query = f"SELECT * from zabytki where miejscowosc='{city}'"
-        output = c.execute(sql_query).fetchall()
-        print()
-        for x in output:
-            print(tuple(x))
-        print()
-        items = [tuple([id_temp+1]) + tuple(item)  for id_temp, item in enumerate(output)]
-        quantity = len(items)
-        return render_template("search.html", city=city, items=items, quantity=quantity)
-        # return f"Not implemented, but query parameter is: '{city}' and ..."
+        try:
+            db = get_db()
+            c = db.cursor()
+            sql_query = f"SELECT * from zabytki where miejscowosc='{city}'"
+            output = c.execute(sql_query).fetchall()
+        except sqlite3.Error:
+            abort(500)
+        items = [tuple([id_temp+1]) + tuple(item) for id_temp, item in enumerate(output)]
+        return render_template("search.html", city=city, items=items, quantity=len(items))
     else:
         return render_template('search_main.html')

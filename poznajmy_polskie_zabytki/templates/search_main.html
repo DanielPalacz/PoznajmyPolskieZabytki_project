@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 
+
 {% block header %}
 <p>Super:) Poznajemy razem polskie zabytki.</p>
 {% endblock %}
 
 {% block content %}
 	<form action="/wyszukaj/" method="get">
-        <p>Wyszukiwarka zabytków (na podstawie nazwy miejcowości):  </p>
-        <input type="text" name="miasto" placeholder="..wpisz miejscowość.." autocomplete="off"/>
+        <br>
+        <p>Wyszukiwarka zabytków:</p>
+        <span>
+            <input type="text" name="miasto" placeholder="..wpisz miejscowość.." autocomplete="off"/>
+            <input type="text" name="gmina" placeholder="..wpisz gminę.." autocomplete="off"/>
+            <input type="text" name="powiat" placeholder="..wpisz powiat.." autocomplete="off"/>
+            <input type="text" name="dowolneslowo" placeholder="..wpisz inne słowo kluczowe.." autocomplete="off"/>
+        </span>
         <br/>
         <input type="submit" value="Szukaj"/>
     </form>

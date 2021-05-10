@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<p><b>Zabytki w miejscowości '{{ city }}' ({{ quantity }} znalezione):</b></p>
+<p><b>Zabytki znalezione ({{ quantity }}):</b></p>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,11 @@
       <tr>
           <td>{{ item[0] }}</td>
           <td>{{ item[5] }}</td>
+          {% if item[6] %}
           <td>{{ item[6] }}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %}
           <td>{{ item[7] }}</td>
           <td>{{ item[10] }}</td>
           <td>{{ item[11] }}</td>

@@ -35,7 +35,7 @@ def wyszukaj():
         for x in output:
             print(tuple(x))
         print()
-        items = [tuple(item) for item in output]
+        items = [tuple([id_temp+1]) + tuple(item)  for id_temp, item in enumerate(output)]
         quantity = len(items)
         return render_template("search.html", city=city, items=items, quantity=quantity)
         # return f"Not implemented, but query parameter is: '{city}' and ..."

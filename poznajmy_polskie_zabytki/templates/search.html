@@ -5,7 +5,34 @@
 {% endblock %}
 
 {% block content %}
+<table style="width:100%">
+  <tr>
+    <th>Id</th>
+    <th>Nazwa zabytku</th>
+    <th>Chronologia</th>
+    <th>Funkcja</th>
+    <th>Wojewodztwo</th>
+    <th>Powiat</th>
+    <th>Gmina</th>
+    <th>Miejscowość</th>
+    <th>Ulica/Nr</th>
+  </tr>
     {% for item in items %}
-        <p>'{{ item }}'</p>
+      <tr>
+          <td>{{ item[0] }}</td>
+          <td>{{ item[5] }}</td>
+          <td>{{ item[6] }}</td>
+          <td>{{ item[7] }}</td>
+          <td>{{ item[10] }}</td>
+          <td>{{ item[11] }}</td>
+          <td>{{ item[12] }}</td>
+          <td>{{ item[13] }}</td>
+          {% if item[14] %}
+          <td>{{ item[14] }} {{ item[15] }}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %}
+      </tr>
     {% endfor %}
+</table>
 {% endblock %}

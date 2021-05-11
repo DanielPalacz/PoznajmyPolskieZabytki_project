@@ -40,14 +40,8 @@ def test_wyszukaj_without_parameters(client):
 
 
 def test_wyszukaj_sql_injection_filtering(client):
-    # Sql injection filtering not implemented yet - so test fails
-    response = client.get("/wyszukaj/?miasto=&gmina=&powiat=&dowolneslowo=+or+miasto='Koniusza'")
+    response = client.get("/wyszukaj/?miasto=Koniusza'+or+True+or+miejscowosc%3D'Koniusza&gmina=&powiat=&dowolneslowo=")
     assert response.status_code == 200, "Sql injection filtering not implemented"
-
-
-def test_wyszukaj_dberror_when_sql_injection(client):
-    response = client.get("/wyszukaj/?miasto=&gmina=&powiat=&dowolneslowo=+or+miasto='Koniusza'")
-    assert response.status_code == 500
 
 
 @pytest.mark.skip

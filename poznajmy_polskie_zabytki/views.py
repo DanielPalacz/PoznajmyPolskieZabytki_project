@@ -47,10 +47,10 @@ def index():
 
 @bp.route('/wyszukaj/')
 def wyszukaj():
-    city = request.args.get("miasto", "")
-    parish = request.args.get("gmina", "")
-    county = request.args.get("powiat", "")
-    keyword = request.args.get("dowolneslowo", "")
+    city = request.args.get("miasto", "").replace("'", "")
+    parish = request.args.get("gmina", "").replace("'", "")
+    county = request.args.get("powiat", "").replace("'", "")
+    keyword = request.args.get("dowolneslowo", "").replace("'", "")
     if city or parish or county or keyword:
         try:
             db = get_db()

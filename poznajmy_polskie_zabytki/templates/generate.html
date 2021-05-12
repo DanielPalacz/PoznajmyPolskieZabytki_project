@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header_ext %}
+Dla zadanych parametrów wyszukiwania:
+    {% for param in params %}
+<br>
+        -- {{ param }}
+    {% endfor %}
+
+<p>Proponujemy Ci następującą wycieczkę:</p>
+
+{% endblock %}
+
+{% block content %}
+    {% for item in items %}
+        <p>{{ item }}</p>
+    {% endfor %}
+<p style="background-color:powderblue;"><i><b> {{ trip }} </b></i></p>
+{% endblock %}

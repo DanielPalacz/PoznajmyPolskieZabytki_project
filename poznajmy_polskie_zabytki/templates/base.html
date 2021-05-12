@@ -22,6 +22,7 @@ th, td {
   <header>
     {% block header %}{% endblock %}
   </header>
+  {% block header_ext %}{% endblock %}
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}

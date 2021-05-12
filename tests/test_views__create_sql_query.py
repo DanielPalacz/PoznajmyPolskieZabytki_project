@@ -30,6 +30,11 @@ def test_only_county():
     assert query == "SELECT * from zabytki where powiat='olkuski' order by powiat, gmina, miejscowosc, ulica"
 
 
+def test_only_voivodeship():
+    query = _create_sql_query(voivodeship="mazowieckie")
+    assert query == "SELECT * from zabytki where wojewodztwo='mazowieckie' order by powiat, gmina, miejscowosc, ulica"
+
+
 def test_only_keyword():
     query = _create_sql_query(keyword="dzwonnica")
     assert query == "SELECT * from zabytki where ( " \

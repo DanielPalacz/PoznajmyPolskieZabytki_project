@@ -1,4 +1,5 @@
 <!doctype html>
+<html>
 <style>
 table, th, td {
   border: 1px solid black;
@@ -14,6 +15,9 @@ th, td {
 <nav>
   <h2><a href="{{ url_for('views.index') }}">Poznajmy polskie zabytki</a></h2>
 </nav>
+
+<body>
+
 <section class="content">
   <header>
     {% block header %}{% endblock %}
@@ -23,3 +27,6 @@ th, td {
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
+
+</body>
+</html>

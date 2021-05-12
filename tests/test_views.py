@@ -14,7 +14,7 @@ def test_index_links(client):
     links = [repr(link) for link in soup.find_all("a")]
     assert '<a href="/">Poznajmy polskie zabytki</a>' in links
     assert '<a href="/wyszukaj">Wyszukaj zabytki</a>' in links
-    assert '<a href="/wygenerujesz">Wygeneruj wycieczkę</a>' in links
+    assert '<a href="/wygeneruj">Wygeneruj wycieczkę</a>' in links
 
 
 def test_wyszukaj_main(client):

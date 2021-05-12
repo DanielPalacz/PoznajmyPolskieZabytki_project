@@ -3,7 +3,7 @@ from poznajmy_polskie_zabytki.views import _create_sql_query
 
 def test_no_parameters():
     query = _create_sql_query()
-    assert query == "SELECT * from zabytki where"
+    assert query == ""
     def_params = _create_sql_query.__kwdefaults__
     assert [] == [val for val in def_params.values() if val != ""]
 
@@ -17,17 +17,17 @@ def test_only_keyword_parameters():
 
 def test_only_city():
     query = _create_sql_query(city="Warszawa")
-    assert query == "SELECT * from zabytki where miejscowosc='Warszawa'"
+    assert query == "SELECT * from zabytki where miejscowosc='Warszawa' order by powiat, gmina, miejscowosc, ulica"
 
 
 def test_only_parish():
     query = _create_sql_query(parish="Wolbrom")
-    assert query == "SELECT * from zabytki where gmina like '%Wolbrom%'"
+    assert query == "SELECT * from zabytki where gmina like '%Wolbrom%' order by powiat, gmina, miejscowosc, ulica"
 
 
 def test_only_county():
     query = _create_sql_query(county="olkuski")
-    assert query == "SELECT * from zabytki where powiat='olkuski'"
+    assert query == "SELECT * from zabytki where powiat='olkuski' order by powiat, gmina, miejscowosc, ulica"
 
 
 def test_only_keyword():
@@ -36,12 +36,14 @@ def test_only_keyword():
                     "nazwa like '%dzwonnica%' or " \
                     "funkcja like '%dzwonnica%' or " \
                     "wojewodztwo like '%dzwonnica%' or " \
-                    "chronologia like '%dzwonnica%' )"
+                    "chronologia like '%dzwonnica%' )" \
+                    " order by powiat, gmina, miejscowosc, ulica"
 
 
 def test_city_and_parish():
     query = _create_sql_query(city="Koniusza", parish="Koniusza")
-    assert query == "SELECT * from zabytki where miejscowosc='Koniusza' and gmina like '%Koniusza%'"
+    assert query == "SELECT * from zabytki where miejscowosc='Koniusza' and gmina like '%Koniusza%'" \
+                    " order by powiat, gmina, miejscowosc, ulica"
 
 
 def test_city_and_parish_and_county():
@@ -49,7 +51,8 @@ def test_city_and_parish_and_county():
     assert query == "SELECT * from zabytki where " \
                     "miejscowosc='Koniusza' and " \
                     "gmina like '%Koniusza%' and " \
-                    "powiat='proszowicki'"
+                    "powiat='proszowicki'" \
+                    " order by powiat, gmina, miejscowosc, ulica"
 
 
 def test_city_and_parish_and_county_and_keyword():
@@ -63,4 +66,5 @@ def test_city_and_parish_and_county_and_keyword():
                         "funkcja like '%dzwonnica%' or " \
                         "wojewodztwo like '%dzwonnica%' or " \
                         "chronologia like '%dzwonnica%' " \
-                    ")"
+                    ")" \
+                    " order by powiat, gmina, miejscowosc, ulica"

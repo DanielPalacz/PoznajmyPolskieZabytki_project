@@ -21,7 +21,10 @@ bp = Blueprint("views", __name__)
 
 
 def _create_sql_query(*, city="", parish="", county="", keyword="") -> str:
-    sql_query = "SELECT * from zabytki where"
+    if city or parish or county or keyword:
+        sql_query = "SELECT * from zabytki where"
+    else:
+        return ""
     if city:
         sql_query += " miejscowosc='" + city + "'"
     if parish:
@@ -37,6 +40,7 @@ def _create_sql_query(*, city="", parish="", county="", keyword="") -> str:
             sql_query += " and"
         sql_query += " ( nazwa like '%" + keyword + "%'" + " or funkcja like '%" + keyword + "%'"
         sql_query += " or wojewodztwo like '%" + keyword + "%'" + " or chronologia like '%" + keyword + "%' )"
+    sql_query += " order by powiat, gmina, miejscowosc, ulica"
     return sql_query
 
 
@@ -62,3 +66,8 @@ def wyszukaj():
         return render_template("search.html", city=city, items=items, quantity=len(items))
     else:
         return render_template('search_main.html')
+
+
+@bp.route('/wygeneruj/')
+def wygeneruj():
+    return render_template('generate_main.html')

@@ -1,23 +1,18 @@
 <!doctype html>
-<html>
-<style>
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-th, td {
-  padding: 5px;
-  text-align: left;
-}
-</style>
+<html style="height:100%">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{% block title %}{% endblock %} - Poznajmy polskie zabytki</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
 <nav>
   <h2><a href="{{ url_for('views.index') }}">Poznajmy polskie zabytki</a></h2>
 </nav>
 
-<body>
-
+<body style="height:100%">
 <section class="content">
   <header>
     {% block header %}{% endblock %}
@@ -28,6 +23,6 @@ th, td {
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
-
 </body>
+
 </html>

@@ -41,7 +41,8 @@ def test_only_keyword():
                     "nazwa like '%dzwonnica%' or " \
                     "funkcja like '%dzwonnica%' or " \
                     "wojewodztwo like '%dzwonnica%' or " \
-                    "chronologia like '%dzwonnica%' )" \
+                    "chronologia like '%dzwonnica%' or " \
+                    "ulica like '%dzwonnica%' )" \
                     " order by powiat, gmina, miejscowosc, ulica"
 
 
@@ -70,6 +71,7 @@ def test_city_and_parish_and_county_and_keyword():
                         "nazwa like '%dzwonnica%' or " \
                         "funkcja like '%dzwonnica%' or " \
                         "wojewodztwo like '%dzwonnica%' or " \
-                        "chronologia like '%dzwonnica%' " \
+                        "chronologia like '%dzwonnica%' or " \
+                        "ulica like '%dzwonnica%' " \
                     ")" \
                     " order by powiat, gmina, miejscowosc, ulica"

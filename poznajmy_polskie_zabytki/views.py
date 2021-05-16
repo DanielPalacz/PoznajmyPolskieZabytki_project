@@ -43,7 +43,9 @@ def _create_sql_query(*, city="", parish="", county="", keyword="", voivodeship=
         if city or parish or county:
             sql_query += " and"
         sql_query += " ( nazwa like '%" + keyword + "%'" + " or funkcja like '%" + keyword + "%'"
-        sql_query += " or wojewodztwo like '%" + keyword + "%'" + " or chronologia like '%" + keyword + "%' )"
+        sql_query += " or wojewodztwo like '%" + keyword + "%'" + " or chronologia like '%" + keyword + "%'"
+        sql_query += " or ulica like '%" + keyword + "%' )"
+
     sql_query += " order by powiat, gmina, miejscowosc, ulica"
     return sql_query
 

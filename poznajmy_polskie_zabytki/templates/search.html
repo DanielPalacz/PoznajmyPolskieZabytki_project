@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<p><b>Zabytki znalezione ({{ quantity }}):</b></p>
+{% block header_ext %}
+Parametry wyszukiwania:
+    {% for param in params %}
+<br>
+        -- {{ param }}
+    {% endfor %}
+<br>
+<p>Liczba znalezionych zabytków wynosi: <b>{{ quantity }}</b>.</p>
+
 {% endblock %}
 
 {% block content %}
